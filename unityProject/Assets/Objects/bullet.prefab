@@ -180,8 +180,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 47040d71fedf697429e9ed30917d10fa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 200
-  gravity: 3
+  speed: 100
+  gravity: 1
   hitEmitter: {fileID: 8015286029309587438, guid: 7d675512f8edeb849af60503ed769178,
     type: 3}
 --- !u!114 &7560392646154587468

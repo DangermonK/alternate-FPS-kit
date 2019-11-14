@@ -32,6 +32,11 @@ public class bullet : MonoBehaviour
 
         if(Physics.Linecast(oldPos, transform.position, out hit))
         {
+            if(hit.collider.tag == "enemy")
+            {
+                Destroy(hit.collider.gameObject);
+            }
+
             Instantiate(hitEmitter, hit.point, Quaternion.FromToRotation(hitEmitter.up, -hit.normal));
             Destroy(gameObject);
         }
