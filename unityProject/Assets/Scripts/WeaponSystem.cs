@@ -1,10 +1,11 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 public class WeaponSystem : MonoBehaviour
 {
-
+    [SerializeField] private Interaction interact;
     [SerializeField] private PlayerMovement player;
     [SerializeField] private float shootDelay = .5f;
     private float nextShot;
@@ -14,11 +15,20 @@ public class WeaponSystem : MonoBehaviour
     [SerializeField] private GameObject bullet;
 
     private bool fall, shoot = false;
+    [SerializeField] private int shotsPerMag, mags, shots;
+    [SerializeField] private TextMeshProUGUI ammo;
 
     // Start is called before the first frame update
     void Start()
     {
         anim = GetComponent<Animator>();
+    }
+
+    void UpdateText()
+    {
+
+        ammo.SetText($"{shots} / {mags}");
+
     }
 
     // Update is called once per frame
@@ -28,11 +38,32 @@ public class WeaponSystem : MonoBehaviour
         if (anim.GetBool("shoot"))
         {
             anim.SetBool("shoot", false);
-        } else if (Input.GetMouseButton(0) && anim.GetBool("boner") && Time.time > nextShot)
+            if(shots == 0 && mags == 0)
+            {
+                anim.SetBool("boner", false);
+            }
+        } else if (Input.GetMouseButton(0) && anim.GetBool("boner") && Time.time > nextShot && shots > 0)
         {
+            shots--;
+            UpdateText();
             nextShot = Time.time + shootDelay;
             anim.SetBool("shoot", true);
             Instantiate(bullet, emitter.position, emitter.rotation);
+        } else if (Input.GetKeyDown(KeyCode.R))
+        {
+            if(mags > 0 && shots < shotsPerMag)
+            {
+                mags--;
+                shots = shotsPerMag;
+                UpdateText();
+            }
+        } else if(Input.GetKeyDown(KeyCode.E))
+        {
+            if(interact.hasHit() && interact.getHitObject().tag == "mag")
+            {
+                AddMag();
+                Destroy(interact.getHitObject());
+            }
         }
 
         if (player.isGrounded())
@@ -50,13 +81,8 @@ public class WeaponSystem : MonoBehaviour
             {
                 player.Jump();
                 anim.SetTrigger("jump");
-            } else if(Input.GetKeyDown(KeyCode.E)) 
-            {
-                anim.SetBool("boner", !anim.GetBool("boner"));
             }
-
             
-
         } else
         {
 
@@ -69,4 +95,14 @@ public class WeaponSystem : MonoBehaviour
         }
 
     }
+
+    public void AddMag()
+    {
+        
+        mags++;
+        UpdateText();
+        anim.SetBool("boner", true);
+
+    }
+
 }
