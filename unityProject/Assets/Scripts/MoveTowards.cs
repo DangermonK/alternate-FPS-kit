@@ -28,7 +28,7 @@ public class MoveTowards : MonoBehaviour
         look = (target.position - transform.position);
         look.y = 0;
 
-        if(index != 0 && Vector3.Magnitude(look) < 2)
+        if(index != 0 && Vector3.Magnitude(look) < 5)
         {
             target = target.GetComponent<Linker>().getObj();
         }

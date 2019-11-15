@@ -7,6 +7,7 @@ public class PathSystem : MonoBehaviour
 {
 
     [SerializeField] private float spawnTime = 20;
+    [SerializeField] private float sphere = 2;
     [SerializeField] private GameObject enemy;
     [SerializeField] private GameObject[] path;
 
@@ -31,8 +32,11 @@ public class PathSystem : MonoBehaviour
         path = GameObject.FindGameObjectsWithTag("path");
         Gizmos.color = Color.blue;
         Gizmos.DrawLine(path[path.Length -1].transform.position, path[0].transform.position);
+        Gizmos.DrawSphere(path[0].transform.position, sphere);
         for (int i = 1; i < path.Length; i++) {
             Gizmos.DrawLine(path[i - 1].transform.position, path[i].transform.position);
+            Gizmos.DrawSphere(path[i].transform.position, sphere);
+
         }
     }
     
