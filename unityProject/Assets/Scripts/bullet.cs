@@ -29,6 +29,7 @@ public class bullet : MonoBehaviour
         
         oldPos = transform.position;
         transform.position += fwd * speed * Time.deltaTime + Vector3.down * yVelocity;
+        Debug.DrawLine(oldPos, transform.position, Color.red);
 
         if(Physics.Linecast(oldPos, transform.position, out hit))
         {

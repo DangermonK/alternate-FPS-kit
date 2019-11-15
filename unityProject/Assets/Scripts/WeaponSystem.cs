@@ -6,7 +6,8 @@ public class WeaponSystem : MonoBehaviour
 {
 
     [SerializeField] private PlayerMovement player;
-    [SerializeField] private float shootDelay = 2;
+    [SerializeField] private float shootDelay = .5f;
+    private float nextShot;
     private Animator anim;
 
     [SerializeField] private Transform emitter;
@@ -24,15 +25,12 @@ public class WeaponSystem : MonoBehaviour
     void Update()
     {
 
-        if(shoot)
+        if (anim.GetBool("shoot"))
         {
-            shoot = false;
             anim.SetBool("shoot", false);
-        }
-
-        if (Input.GetMouseButtonDown(0) && anim.GetBool("boner") && !shoot)
+        } else if (Input.GetMouseButton(0) && anim.GetBool("boner") && Time.time > nextShot)
         {
-            shoot = true;
+            nextShot = Time.time + shootDelay;
             anim.SetBool("shoot", true);
             Instantiate(bullet, emitter.position, emitter.rotation);
         }
@@ -62,8 +60,11 @@ public class WeaponSystem : MonoBehaviour
         } else
         {
 
-            anim.SetBool("fall", true);
-            fall = true;
+            if (player.getVelocityY() < 0)
+            {
+                anim.SetBool("fall", true);
+                fall = true;
+            }
 
         }
 

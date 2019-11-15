@@ -9,11 +9,12 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private CameraMovement camMovement;
     
     [SerializeField] private float gravity;
+    [SerializeField] private float groundedGravity;
     [SerializeField] private float jumpHeight;
     [SerializeField] private float movementSpeed;
 
     private CharacterController controller;
-    private float velocityY;
+    [SerializeField]private float velocityY;
     private bool grounded, jump;
 
     private float inputX, inputY;
@@ -42,7 +43,8 @@ public class PlayerMovement : MonoBehaviour
         
         if(controller.isGrounded && !jump)
         {
-            
+
+            velocityY = -groundedGravity;
             grounded = true;
 
         } else

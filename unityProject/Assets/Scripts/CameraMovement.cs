@@ -16,7 +16,8 @@ public class CameraMovement : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
     }
 
     // Update is called once per frame
@@ -26,8 +27,8 @@ public class CameraMovement : MonoBehaviour
         inputX = Input.GetAxis("Mouse X");
         inputY = Input.GetAxis("Mouse Y");
 
-        rotX += inputX * rotationSpeed;
-        rotY += inputY * rotationSpeed;
+        rotX += inputX * rotationSpeed * Time.deltaTime;
+        rotY += inputY * rotationSpeed * Time.deltaTime;
 
         rotY = Mathf.Clamp(rotY, minYClamp, maxYClamp);
 
