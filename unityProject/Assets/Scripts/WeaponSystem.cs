@@ -48,7 +48,7 @@ public class WeaponSystem : MonoBehaviour
             UpdateText();
             nextShot = Time.time + shootDelay;
             anim.SetBool("shoot", true);
-            Instantiate(bullet, emitter.position, emitter.rotation);
+            Instantiate(bullet, emitter.position, gameObject.GetComponentInParent<Transform>().rotation);
         } else if (Input.GetKeyDown(KeyCode.R))
         {
             if(mags > 0 && shots < shotsPerMag)
